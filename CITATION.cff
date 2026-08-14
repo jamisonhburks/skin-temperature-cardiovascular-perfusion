@@ -4,16 +4,17 @@ title: "skin-temperature-cardiovascular-perfusion: physics-informed modeling of 
 authors:
   - family-names: Burks
     given-names: Jamison H.
-    orcid: "https://orcid.org/0000-0000-0000-0000"
+    orcid: "https://orcid.org/0000-0003-4816-5704"
 version: 0.1.0
 license: MIT
-repository-code: "https://github.com/your-org/skin-temperature-cardiovascular-perfusion"
+repository-code: "https://github.com/jamisonhburks/skin-temperature-cardiovascular-perfusion"
 preferred-citation:
   type: article
   title: "Wearable-derived skin temperature dynamics during sleep reveal cardiovascular perfusion deficits through mechanistic modeling"
   authors:
     - family-names: Burks
       given-names: Jamison H.
+      orcid: "https://orcid.org/0000-0003-4816-5704"
     - family-names: Hartogensis
       given-names: Wendy
     - family-names: Dilchert
