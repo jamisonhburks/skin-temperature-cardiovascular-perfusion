@@ -1,0 +1,38 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.ipynb_checkpoints/
+.pytest_cache/
+.ruff_cache/
+
+# Environments
+.venv/
+venv/
+env/
+
+# ----------------------------------------------------------------------------
+# DATA POLICY
+# ----------------------------------------------------------------------------
+# Never commit real participant wearable data. data/raw/ is read-only source
+# of truth for anyone plugging in real Oura exports and must stay out of git.
+data/raw/*
+!data/raw/.gitkeep
+!data/raw/README.md
+
+# Generated artifacts are reproducible from scripts; keep them out of git.
+data/synthetic/*
+!data/synthetic/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+results/figures/*
+!results/figures/.gitkeep
+
+# Notebook-generated synthetic data (reproducible from the tutorial itself)
+notebooks/synthetic_demo/
+
+# OS
+.DS_Store

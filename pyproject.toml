@@ -1,0 +1,66 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "skin-temperature-cardiovascular-perfusion"
+version = "0.1.0"
+description = "Physics-informed modeling of wearable skin-temperature dynamics and activity coupling during sleep."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Jamison H. Burks", email = "jburks@ucsd.edu" },
+]
+keywords = [
+    "wearables", "skin temperature", "digital medicine", "time series",
+    "transfer entropy", "cardiovascular", "Oura", "physiology",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+]
+
+dependencies = [
+    "numpy>=1.23",
+    "pandas>=1.5",
+    "scipy>=1.9",
+    "statsmodels>=0.13",
+    "pingouin>=0.5",
+    "scikit-learn>=1.1",
+    "matplotlib>=3.6",
+    "seaborn>=0.12",
+    "pyarrow>=10.0",
+    "tqdm>=4.64",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+# Transfer entropy uses `pyinform`; it is optional because a pure-NumPy
+# fallback estimator ships with the package (see transfer_entropy.py).
+te = ["pyinform>=0.2"]
+dev = ["pytest>=7.0", "jupyter>=1.0", "ruff>=0.1"]
+
+[project.urls]
+"Paper" = "https://doi.org/10.1038/s41746-026-02633-2"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "scripts"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "W"]  # pycodestyle, pyflakes, isort, pyupgrade
+ignore = ["RUF022"]                  # keep __all__ in logical (not alphabetical) order
+
+[tool.ruff.lint.isort]
+known-first-party = ["skin_temp_perfusion"]
