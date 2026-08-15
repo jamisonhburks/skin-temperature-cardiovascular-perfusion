@@ -49,6 +49,10 @@ dev = ["pytest>=7.0", "jupyter>=1.0", "ruff>=0.1"]
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+# Ship the PEP 561 marker so downstream type checkers (mypy, pyright) use our hints.
+skin_temp_perfusion = ["py.typed"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"

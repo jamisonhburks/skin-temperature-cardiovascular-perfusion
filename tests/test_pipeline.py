@@ -5,8 +5,17 @@ from __future__ import annotations
 import warnings
 
 from skin_temp_perfusion import pipeline as pl
-from skin_temp_perfusion.io import load_demographics
+from skin_temp_perfusion.io import iter_participants, load_demographics
 from skin_temp_perfusion.synthetic import generate_dataset
+
+
+def test_iter_participants_skips_demographics(tmp_path):
+    """The default glob must not mis-load demographics.parquet as a participant."""
+    generate_dataset(3, tmp_path / "synthetic", n_nights=2, seed=0)
+    assert (tmp_path / "synthetic" / "demographics.parquet").exists()
+    ids = [pid for pid, _ in iter_participants(tmp_path / "synthetic")]  # default pattern
+    assert "demographics" not in ids
+    assert len(ids) == 3
 
 
 def test_full_pipeline_runs(tmp_path, config):

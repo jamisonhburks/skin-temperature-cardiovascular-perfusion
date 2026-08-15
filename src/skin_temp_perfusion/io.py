@@ -19,11 +19,16 @@ REQUIRED_COLUMNS: tuple[str, ...] = (COL_TEMP, COL_MET, COL_AWAKE)
 
 __all__ = [
     "REQUIRED_COLUMNS",
+    "NON_PARTICIPANT_STEMS",
     "validate_timeseries",
     "load_participant",
     "iter_participants",
     "load_demographics",
 ]
+
+#: Parquet files in a data directory that are not participant records and must
+#: be skipped when iterating (e.g. the demographics table).
+NON_PARTICIPANT_STEMS: frozenset[str] = frozenset({"demographics"})
 
 
 def validate_timeseries(df: pd.DataFrame, *, name: str = "<frame>") -> pd.DataFrame:
@@ -62,13 +67,18 @@ def load_participant(path: str | Path) -> pd.DataFrame:
 def iter_participants(
     directory: str | Path, *, pattern: str = "*.parquet"
 ) -> Iterator[tuple[str, pd.DataFrame]]:
-    """Yield ``(participant_id, frame)`` for every parquet file in ``directory``.
+    """Yield ``(participant_id, frame)`` for every participant parquet in ``directory``.
 
     The participant id is the file stem, which lets the loader work identically
     for real exports (hashed ids) and synthetic files (``P0000`` …).
+    Non-participant tables such as ``demographics.parquet`` are skipped (see
+    :data:`NON_PARTICIPANT_STEMS`), so pointing this at a data directory "just
+    works" without a custom pattern.
     """
     directory = Path(directory)
     for path in sorted(directory.glob(pattern)):
+        if path.stem in NON_PARTICIPANT_STEMS:
+            continue
         yield path.stem, load_participant(path)
 
 

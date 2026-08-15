@@ -35,7 +35,9 @@ __all__ = [
 
 
 def _participants(data_dir, progress, desc):
-    it = iter_participants(data_dir, pattern="P*.parquet")
+    # Default glob works for real (hashed-id) and synthetic files; the loader
+    # skips demographics.parquet, so no custom pattern is needed.
+    it = iter_participants(data_dir)
     return tqdm(it, desc=desc) if progress else it
 
 
